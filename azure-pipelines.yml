@@ -10,5 +10,5 @@ steps:
 # Check for Git
 - script: |
     which git
-    git -v
+    git -version
   displayName: 'Check for Git'

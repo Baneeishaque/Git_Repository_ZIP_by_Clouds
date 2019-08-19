@@ -1,7 +1,7 @@
 # Git_Zipper_Uploader_AzureDevOps pipeline
 
 trigger:
-- develop
+- feature/clone
 
 pool:
   vmImage: 'ubuntu-latest'

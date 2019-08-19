@@ -14,7 +14,7 @@ steps:
 # Clone Repository & Verify Clone
 - script: |
     git clone https://github.com/QuarkLabs/i-have-a-theory
-    echo .
+    echo 
     echo Repository Contents
     echo --------------------------------------------------------
     ls i-have-a-theory

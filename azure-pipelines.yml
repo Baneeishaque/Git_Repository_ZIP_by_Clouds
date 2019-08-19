@@ -9,6 +9,6 @@ pool:
 steps:
 # Check for Git
 - script: |
-    which git
+    which gith
     git -version
   displayName: 'Check for Git'

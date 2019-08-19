@@ -1,0 +1,14 @@
+# Git_Zipper_Uploader_AzureDevOps pipeline
+
+trigger:
+- develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+# Check for Git
+- script: |
+    which git
+    git -v
+  displayName: 'Check for Git'

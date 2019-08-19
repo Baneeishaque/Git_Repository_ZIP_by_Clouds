@@ -11,6 +11,8 @@ steps:
 - script: git --version
   displayName: 'Check for Git'
 
-# Clone Repository
-- script: git clone https://github.com/QuarkLabs/i-have-a-theory
+# Clone Repository & Verify Clone
+- script: |
+    git clone https://github.com/QuarkLabs/i-have-a-theory
+    ls i-have-a-theory
   displayName: 'Clone Repository'

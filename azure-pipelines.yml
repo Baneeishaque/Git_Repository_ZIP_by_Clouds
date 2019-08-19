@@ -8,7 +8,9 @@ pool:
 
 steps:
 # Check for Git
-- script: |
-    which gith
-    git -version
+- script: git --version
   displayName: 'Check for Git'
+
+# Clone Repository
+- script: git clone https://github.com/QuarkLabs/i-have-a-theory
+  displayName: 'Clone Repository'

@@ -19,3 +19,7 @@ steps:
     echo --------------------------------------------------------
     ls i-have-a-theory
   displayName: 'Clone Repository'
+
+# Check for Zip
+- script: zip --version
+  displayName: 'Check for Zip'

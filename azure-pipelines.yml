@@ -1,7 +1,7 @@
 # Git_Zipper_Uploader_AzureDevOps pipeline
 
 trigger:
-- develop
+- feature/zip
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -19,3 +19,16 @@ steps:
     echo --------------------------------------------------------
     ls i-have-a-theory
   displayName: 'Clone Repository'
+
+# Check for Zip
+- script: zip --version
+  displayName: 'Check for Zip'
+
+# Compress Repository & Verify Compress
+- script: |
+    zip -r i-have-a-theory.zip i-have-a-theory 
+    echo 
+    echo Current Directory Contents
+    echo --------------------------------------------------------
+    ls
+  displayName: 'Zip Repository'

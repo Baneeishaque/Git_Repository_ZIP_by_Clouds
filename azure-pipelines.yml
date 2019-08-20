@@ -1,7 +1,7 @@
 # Git_Zipper_Uploader_AzureDevOps pipeline
 
 trigger:
-- develop
+- feature/secret_variables
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -39,13 +39,19 @@ steps:
   displayName: 'Zip Repository'
 
 # Upload Repository Zip File
-- task: FtpUpload@1
+- env:
+    # Secret Variables
+    MAPPED_FTP_HOST: $(FTP_HOST)
+    MAPPED_FTP_USER: $(FTP_USER)
+    MAPPED_FTP_PWD: $(FTP_PWD)
+
+  task: FtpUpload@1
   displayName: 'FTP Upload Repository Zip File'
   inputs:
     credentialsOption: inputs
-    serverUrl: 'ftp://192.254.233.216'
-    username: 'root@alaneesgroup.com'
-    password: 9895204814
+    serverUrl: 'ftp://$(MAPPED_FTP_HOST)'
+    username: '$(MAPPED_FTP_USER)'
+    password: $(MAPPED_FTP_PWD)
     # TODO : Add option for file instead of directory
     rootDirectory: '.'
     remoteDirectory: '/azure_devops/git_zipper_uploader'

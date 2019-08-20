@@ -8,8 +8,8 @@ pool:
 
 # Variables
 variables:
-  owner: wasabeef
-  repository: awesome-android-ui
+  owner: gatsbyjs
+  repository: gatsby
 
 steps:
 # Check for Git
@@ -39,14 +39,13 @@ steps:
   displayName: 'Zip Repository'
 
 # Upload Repository Zip File
-- env:
+- task: FtpUpload@1
+  displayName: 'FTP Upload Repository Zip File'
+  env:
     # Secret Variables
     MAPPED_FTP_HOST: $(FTP_HOST)
     MAPPED_FTP_USER: $(FTP_USER)
     MAPPED_FTP_PWD: $(FTP_PWD)
-
-  task: FtpUpload@1
-  displayName: 'FTP Upload Repository Zip File'
   inputs:
     credentialsOption: inputs
     serverUrl: 'ftp://$(MAPPED_FTP_HOST)'

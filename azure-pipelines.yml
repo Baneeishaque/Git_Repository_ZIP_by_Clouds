@@ -1,10 +1,15 @@
 # Git_Zipper_Uploader_AzureDevOps pipeline
 
 trigger:
-- develop
+- feature/variables
 
 pool:
   vmImage: 'ubuntu-latest'
+
+# Variables
+variables:
+  owner: wasabeef
+  repository: awesome-android-ui
 
 steps:
 # Check for Git
@@ -13,11 +18,11 @@ steps:
 
 # Clone Repository & Verify Clone
 - script: |
-    git clone https://github.com/QuarkLabs/i-have-a-theory
+    git clone https://github.com/$(owner)/$(repository)
     echo 
     echo Repository Contents
     echo --------------------------------------------------------
-    ls -all i-have-a-theory
+    ls -all $(repository)
   displayName: 'Clone Repository'
 
 # Check for Zip
@@ -26,7 +31,7 @@ steps:
 
 # Compress Repository & Verify Compress
 - script: |
-    zip -r i-have-a-theory.zip i-have-a-theory 
+    zip -r $(repository).zip $(repository) 
     echo 
     echo Current Directory Contents
     echo --------------------------------------------------------
@@ -44,4 +49,4 @@ steps:
     # TODO : Add option for file instead of directory
     rootDirectory: '.'
     remoteDirectory: '/azure_devops/git_zipper_uploader'
-    filePatterns: '*.zip'
+    filePatterns: '$(repository).zip'

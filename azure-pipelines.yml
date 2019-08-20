@@ -32,3 +32,15 @@ steps:
     echo --------------------------------------------------------
     ls
   displayName: 'Zip Repository'
+
+# Upload Repository Zip File
+- task: FtpUpload@1
+  displayName: 'FTP Upload Repository Zip File'
+  inputs:
+    credentialsOption: inputs
+    serverUrl: 'ftp://192.254.233.216'
+    username: 'root@alaneesgroup.com'
+    password: 9895204814
+    rootDirectory: '.'
+    remoteDirectory: '/azure_devops/git_zipper_uploader'
+    filePatterns: '*.zip'

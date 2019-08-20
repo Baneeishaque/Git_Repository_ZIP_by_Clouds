@@ -17,7 +17,7 @@ steps:
     echo 
     echo Repository Contents
     echo --------------------------------------------------------
-    ls i-have-a-theory
+    ls -all i-have-a-theory
   displayName: 'Clone Repository'
 
 # Check for Zip

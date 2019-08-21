@@ -8,8 +8,8 @@ pool:
 
 # Variables
 variables:
-  owner: wasabeef
-  repository: awesome-android-ui
+  owner: gatsbyjs
+  repository: gatsby
 
 steps:
 # Check for Git

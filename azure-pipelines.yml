@@ -1,7 +1,6 @@
 # Git_Zipper_Uploader_AzureDevOps pipeline
 
 trigger:
-- master
 - develop
 
 pool:
@@ -9,8 +8,8 @@ pool:
 
 # Variables
 variables:
-  owner: gatsbyjs
-  repository: gatsby
+  owner: google-developer-training
+  repository: android-fundamentals
   
   # Secret Variables
   MAPPED_FTP_HOST: $(FTP_HOST)

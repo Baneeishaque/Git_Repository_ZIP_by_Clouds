@@ -10,6 +10,11 @@ pool:
 variables:
   owner: gatsbyjs
   repository: gatsby
+  
+  # Secret Variables
+  MAPPED_FTP_HOST: $(FTP_HOST)
+  MAPPED_FTP_USER: $(FTP_USER)
+  MAPPED_FTP_PWD: $(FTP_PWD)
 
 steps:
 # Check for Git
@@ -41,11 +46,6 @@ steps:
 # Upload Repository Zip File
 - task: FtpUpload@1
   displayName: 'FTP Upload Repository Zip File'
-  env:
-    # Secret Variables
-    MAPPED_FTP_HOST: $(FTP_HOST)
-    MAPPED_FTP_USER: $(FTP_USER)
-    MAPPED_FTP_PWD: $(FTP_PWD)
   inputs:
     credentialsOption: inputs
     serverUrl: 'ftp://$(MAPPED_FTP_HOST)'

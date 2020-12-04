@@ -8,9 +8,9 @@ pool:
 
 # Variables
 variables:
-  hosting_provider: gitlab.com
-  owner: baneeishaque
-  repository: everything_file_lists
+  hosting_provider: github.com
+  owner: Baneeishaque
+  repository: Handwritten-Digit-Recognition-using-Deep-Learning
   
   # Secret Variables
   MAPPED_FTP_HOST: $(FTP_HOST)

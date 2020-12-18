@@ -8,10 +8,9 @@ pool:
 
 # Variables
 variables:
-  hosting_provider: gitlab.com
-  owner: dilshadt101
-  repository: handwritten-digit-recognition-using-deep-learning
-  
+  hosting_provider: github.com
+  owner: MaybeShewill-CV
+  repository: attentive-gan-derainnet
   # Secret Variables
   MAPPED_FTP_HOST: $(FTP_HOST)
   MAPPED_FTP_USER: $(FTP_USER)

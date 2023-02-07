@@ -1,7 +1,16 @@
+parameters:
+- name: image
+  displayName: Pool Image
+  type: string
+  default: windows-latest
+  values:
+  - windows-latest
+  - ubuntu-latest
+
 trigger: none
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ${{ parameters.image }}
 
 # Variables
 variables:
@@ -41,4 +50,4 @@ steps:
   displayName: 'Zip Repository'
 
 - publish: '$(repository).zip'
-  artifact: '$(owner)_$(repository)'
+  artifact: '$(owner)_$(repository)_${{ parameters.image }}'

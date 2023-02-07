@@ -10,7 +10,7 @@ parameters:
 trigger: none
 
 pool:
-  vmImage: ${{ parameters.image }}
+  vmImage: ${{parameters.image}}
 
 # Variables
 variables:
@@ -50,4 +50,4 @@ steps:
   displayName: 'Zip Repository'
 
 - publish: '$(repository).zip'
-  artifact: '$(owner)_$(repository)_${{ parameters.image }}'
+  artifact: '$(owner)_$(repository)_${{parameters.image}}'

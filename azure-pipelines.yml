@@ -40,7 +40,7 @@ jobs:
 
       # Check for Zip
       - ${{if eq(parameters.vmImage, 'windows-latest')}}:
-        - script: 7z --version
+        - script: 7z i
           displayName: "Check for 7Zip"
 
       - ${{if eq(parameters.vmImage, 'ubuntu-latest')}}:

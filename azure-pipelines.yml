@@ -1,53 +1,55 @@
 parameters:
-- name: image
-  displayName: Pool Image
-  type: string
-  default: windows-latest
-  values:
-  - windows-latest
-  - ubuntu-latest
+  - name: vmImage
+    displayName: Pool VM Image
+    type: string
+    default: windows-latest
+    values:
+      - windows-latest
+      - ubuntu-latest
 
 trigger: none
 
-pool:
-  vmImage: ${{parameters.image}}
+jobs:
+  - job: "BuildSolution"
 
-# Variables
-variables:
-  hosting_provider: github.com
-  owner: odoo
-  repository: odoo
+    pool:
+      vmImage: ${{parameters.vmImage}}
 
-steps:
+    # Variables
+    variables:
+      hosting_provider: github.com
+      owner: odoo
+      repository: odoo
 
-- checkout: self
-  fetchDepth: 1
+    steps:
+      - checkout: self
+        fetchDepth: "1"
 
-# Check for Git
-- script: git --version
-  displayName: 'Check for Git'
+      # Check for Git
+      - script: git --version
+        displayName: "Check for Git"
 
-# Clone Repository & Verify Clone
-- script: |
-    git clone https://$(hosting_provider)/$(owner)/$(repository).git
-    echo
-    echo Repository Contents
-    echo --------------------------------------------------------
-    ls -all $(repository)
-  displayName: 'Clone Repository'
+      # Clone Repository & Verify Clone
+      - script: |
+          git clone https://$(hosting_provider)/$(owner)/$(repository).git
+          echo
+          echo Repository Contents
+          echo --------------------------------------------------------
+          ls -all $(repository)
+        displayName: "Clone Repository"
 
-# Check for Zip
-- script: zip --version
-  displayName: 'Check for Zip'
+      # Check for Zip
+      - script: zip --version
+        displayName: "Check for Zip"
 
-# Compress Repository & Verify Compress
-- script: |
-    zip -r $(repository).zip $(repository)
-    echo
-    echo Current Directory Contents
-    echo --------------------------------------------------------
-    ls
-  displayName: 'Zip Repository'
+      # Compress Repository & Verify Compress
+      - script: |
+          zip -r $(repository).zip $(repository)
+          echo
+          echo Current Directory Contents
+          echo --------------------------------------------------------
+          ls
+        displayName: "Zip Repository"
 
-- publish: '$(repository).zip'
-  artifact: '$(owner)_$(repository)_${{parameters.image}}'
+      - publish: "$(repository).zip"
+        artifact: "$(owner)_$(repository)_${{parameters.image}}"

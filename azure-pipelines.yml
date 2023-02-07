@@ -34,5 +34,5 @@ steps:
     ls
   displayName: 'Zip Repository'
 
-- publish: '$(owner)_$(repository).zip'
+- publish: '$(repository).zip'
   artifact: '$(owner)_$(repository)'

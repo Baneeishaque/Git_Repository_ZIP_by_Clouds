@@ -30,7 +30,7 @@ steps:
 # Clone Repository & Verify Clone
 - script: |
     git clone https://$(hosting_provider)/$(owner)/$(repository).git
-    echo 
+    echo
     echo Repository Contents
     echo --------------------------------------------------------
     ls -all $(repository)
@@ -42,8 +42,8 @@ steps:
 
 # Compress Repository & Verify Compress
 - script: |
-    zip -r $(repository).zip $(repository) 
-    echo 
+    zip -r $(repository).zip $(repository)
+    echo
     echo Current Directory Contents
     echo --------------------------------------------------------
     ls

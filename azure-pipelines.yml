@@ -10,7 +10,7 @@ parameters:
 trigger: none
 
 jobs:
-  - job: "BuildSolution"
+  - job: "Upload_Zip_of_Git_Repository"
 
     pool:
       vmImage: ${{parameters.vmImage}}

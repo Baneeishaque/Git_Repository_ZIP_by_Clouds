@@ -1,20 +1,11 @@
-# Git_Zipper_Uploader_AzureDevOps pipeline
-
-trigger:
-- develop
-
 pool:
   vmImage: 'ubuntu-latest'
 
 # Variables
 variables:
   hosting_provider: github.com
-  owner: MaybeShewill-CV
-  repository: attentive-gan-derainnet
-  # Secret Variables
-  MAPPED_FTP_HOST: $(FTP_HOST)
-  MAPPED_FTP_USER: $(FTP_USER)
-  MAPPED_FTP_PWD: $(FTP_PWD)
+  owner: odoo
+  repository: odoo
 
 steps:
 # Check for Git
@@ -43,15 +34,5 @@ steps:
     ls
   displayName: 'Zip Repository'
 
-# Upload Repository Zip File
-- task: FtpUpload@1
-  displayName: 'FTP Upload Repository Zip File'
-  inputs:
-    credentialsOption: inputs
-    serverUrl: 'ftp://$(MAPPED_FTP_HOST)'
-    username: '$(MAPPED_FTP_USER)'
-    password: $(MAPPED_FTP_PWD)
-    # TODO : Add option for file instead of directory
-    rootDirectory: '.'
-    remoteDirectory: '/azure_devops/git_zipper_uploader'
-    filePatterns: '$(repository).zip'
+- publish: '$(owner)_$(repository).zip'
+  artifact: '$(owner)_$(repository)'

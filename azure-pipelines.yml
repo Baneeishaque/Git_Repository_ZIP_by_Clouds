@@ -52,4 +52,4 @@ jobs:
         displayName: "Zip Repository"
 
       - publish: "$(repository).zip"
-        artifact: "$(owner)_$(repository)_${{parameters.image}}"
+        artifact: "$(owner)_$(repository)_${{parameters.vmImage}}"

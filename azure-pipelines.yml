@@ -39,17 +39,32 @@ jobs:
         displayName: "Clone Repository"
 
       # Check for Zip
-      - script: zip --version
-        displayName: "Check for Zip"
+      - ${{if eq(parameters.vmImage, 'windows-latest')}}:
+        - script: 7z --version
+          displayName: "Check for 7Zip"
+
+      - ${{if eq(parameters.vmImage, 'ubuntu-latest')}}:
+        - script: zip --version
+          displayName: "Check for Zip"
 
       # Compress Repository & Verify Compress
-      - script: |
-          zip -r $(repository).zip $(repository)
-          echo
-          echo Current Directory Contents
-          echo --------------------------------------------------------
-          ls
-        displayName: "Zip Repository"
+      - ${{if eq(parameters.vmImage, 'windows-latest')}}:
+        - script: |
+            7z a -tzip $(repository).zip $(repository)
+            echo
+            echo Current Directory Contents
+            echo --------------------------------------------------------
+            dir
+          displayName: "Zip Repository"
+
+      - ${{if eq(parameters.vmImage, 'ubuntu-latest')}}:
+        - script: |
+            zip -r $(repository).zip $(repository)
+            echo
+            echo Current Directory Contents
+            echo --------------------------------------------------------
+            ls
+          displayName: "Zip Repository"
 
       - publish: "$(repository).zip"
         artifact: "$(owner)_$(repository)_${{parameters.vmImage}}"

@@ -7,6 +7,11 @@ parameters:
       - windows-latest
       - ubuntu-latest
 
+  - name: repositoryOwner
+    displayName: Repository Owner
+    type: string
+    default: odoo
+
 trigger: none
 
 jobs:
@@ -31,7 +36,7 @@ jobs:
 
       # Clone Repository & Verify Clone
       - script: |
-          git clone https://$(hosting_provider)/$(owner)/$(repository).git
+          git clone https://$(hosting_provider)/${{parameters.repositoryOwner}}/$(repository).git
           echo
           echo Repository Contents
           echo --------------------------------------------------------
@@ -50,7 +55,7 @@ jobs:
       # Compress Repository & Verify Compress
       - ${{if eq(parameters.vmImage, 'windows-latest')}}:
         - script: |
-            7z a -tzip $(owner)_$(repository)_${{parameters.vmImage}}.zip $(repository)
+            7z a -tzip ${{parameters.repositoryOwner}}_$(repository)_${{parameters.vmImage}}.zip $(repository)
             echo
             echo Current Directory Contents
             echo --------------------------------------------------------
@@ -59,12 +64,12 @@ jobs:
 
       - ${{if eq(parameters.vmImage, 'ubuntu-latest')}}:
         - script: |
-            zip -r $(owner)_$(repository)_${{parameters.vmImage}}.zip $(repository)
+            zip -r ${{parameters.repositoryOwner}}_$(repository)_${{parameters.vmImage}}.zip $(repository)
             echo
             echo Current Directory Contents
             echo --------------------------------------------------------
             ls
           displayName: "Zip Repository"
 
-      - publish: "$(owner)_$(repository)_${{parameters.vmImage}}.zip"
+      - publish: "${{parameters.repositoryOwner}}_$(repository)_${{parameters.vmImage}}.zip"
         artifact: "$(owner)_$(repository)_${{parameters.vmImage}}"

@@ -23,6 +23,16 @@ parameters:
     displayName: Repository Name
     type: string
 
+  - name: cloneType
+    displayName: Clone Type
+    type: string
+    default: Full
+    values:
+      - Full
+      - Blobless
+      - Treeless
+      - Shallow (Depth 1)
+
 trigger: none
 
 jobs:
@@ -41,7 +51,18 @@ jobs:
 
       # Clone Repository & Verify Clone
       - script: |
-          git clone https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
+          if [ "${{ parameters.cloneType }}" = "Full" ] ; then
+            git clone https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
+          fi
+          if [ "${{ parameters.cloneType }}" = "Blobless" ] ; then
+            git clone --filter=blob:none https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
+          fi
+          if [ "${{ parameters.cloneType }}" = "Treeless" ] ; then
+            git clone --filter=tree:0 https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
+          fi
+          if [ "${{ parameters.cloneType }}" = "Shallow (Depth 1)" ] ; then
+            git clone --depth=1 https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
+          fi
           echo
           echo Repository Contents
           echo --------------------------------------------------------

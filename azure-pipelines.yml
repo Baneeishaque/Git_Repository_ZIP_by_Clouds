@@ -7,10 +7,21 @@ parameters:
       - windows-latest
       - ubuntu-latest
 
+  - name: hostingProvider
+    displayName: Hosting Provider
+    type: string
+    default: github.com
+    values:
+      - github.com
+      - gitlab.com
+
   - name: repositoryOwner
     displayName: Repository Owner
     type: string
-    default: odoo
+
+  - name: repositoryName
+    displayName: Repository Name
+    type: string
 
 trigger: none
 
@@ -19,12 +30,6 @@ jobs:
 
     pool:
       vmImage: ${{parameters.vmImage}}
-
-    # Variables
-    variables:
-      hosting_provider: github.com
-      owner: odoo
-      repository: odoo
 
     steps:
       - checkout: self
@@ -36,7 +41,7 @@ jobs:
 
       # Clone Repository & Verify Clone
       - script: |
-          git clone https://$(hosting_provider)/${{parameters.repositoryOwner}}/$(repository).git
+          git clone https://$(parameters.hostingProvider)/${{parameters.repositoryOwner}}/$(parameters.repositoryName).git
           echo
           echo Repository Contents
           echo --------------------------------------------------------
@@ -55,7 +60,7 @@ jobs:
       # Compress Repository & Verify Compress
       - ${{if eq(parameters.vmImage, 'windows-latest')}}:
         - script: |
-            7z a -tzip ${{parameters.repositoryOwner}}_$(repository)_${{parameters.vmImage}}.zip $(repository)
+            7z a -tzip ${{parameters.repositoryOwner}}_$(parameters.repositoryName)_${{parameters.vmImage}}.zip $(parameters.repositoryName)
             echo
             echo Current Directory Contents
             echo --------------------------------------------------------
@@ -64,12 +69,12 @@ jobs:
 
       - ${{if eq(parameters.vmImage, 'ubuntu-latest')}}:
         - script: |
-            zip -r ${{parameters.repositoryOwner}}_$(repository)_${{parameters.vmImage}}.zip $(repository)
+            zip -r ${{parameters.repositoryOwner}}_$(parameters.repositoryName)_${{parameters.vmImage}}.zip $(parameters.repositoryName)
             echo
             echo Current Directory Contents
             echo --------------------------------------------------------
             ls
           displayName: "Zip Repository"
 
-      - publish: "${{parameters.repositoryOwner}}_$(repository)_${{parameters.vmImage}}.zip"
-        artifact: "$(owner)_$(repository)_${{parameters.vmImage}}"
+      - publish: "${{parameters.repositoryOwner}}_$(parameters.repositoryName)_${{parameters.vmImage}}.zip"
+        artifact: "$(parameters.repositoryOwner)_$(parameters.repositoryName)_${{parameters.vmImage}}"

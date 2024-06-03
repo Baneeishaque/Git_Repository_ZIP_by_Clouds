@@ -18,12 +18,10 @@ parameters:
   - name: repositoryOwner
     displayName: Repository Owner
     type: string
-    default: phpmyadmin
 
   - name: repositoryName
     displayName: Repository Name
     type: string
-    default: phpmyadmin
 
 trigger: none
 
@@ -43,11 +41,11 @@ jobs:
 
       # Clone Repository & Verify Clone
       - script: |
-          git clone https://$(parameters.hostingProvider)/${{parameters.repositoryOwner}}/$(parameters.repositoryName).git
+          git clone https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
           echo
           echo Repository Contents
           echo --------------------------------------------------------
-          ls -all $(repository)
+          ls -all ${{ parameters.repositoryName }}
         displayName: "Clone Repository"
 
       # Check for Zip
@@ -62,7 +60,7 @@ jobs:
       # Compress Repository & Verify Compress
       - ${{if eq(parameters.vmImage, 'windows-latest')}}:
         - script: |
-            7z a -tzip ${{parameters.repositoryOwner}}_$(parameters.repositoryName)_${{parameters.vmImage}}.zip $(parameters.repositoryName)
+            7z a -tzip ${{ parameters.repositoryOwner }}_${{ parameters.repositoryName }}_${{ parameters.vmImage }}.zip ${{ parameters.repositoryName }}
             echo
             echo Current Directory Contents
             echo --------------------------------------------------------
@@ -71,7 +69,7 @@ jobs:
 
       - ${{if eq(parameters.vmImage, 'ubuntu-latest')}}:
         - script: |
-            zip -r ${{parameters.repositoryOwner}}_$(parameters.repositoryName)_${{parameters.vmImage}}.zip $(parameters.repositoryName)
+            zip -r ${{ parameters.repositoryOwner }}_${{ parameters.repositoryName }}_${{ parameters.vmImage }}.zip ${{ parameters.repositoryName }}
             echo
             echo Current Directory Contents
             echo --------------------------------------------------------

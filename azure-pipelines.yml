@@ -45,31 +45,32 @@ jobs:
       - checkout: self
         fetchDepth: "1"
 
-      # Check for Git
       - script: git --version
         displayName: "Check for Git"
 
-      # Clone Repository & Verify Clone
+      - ${{if eq(parameters.cloneType, 'Full')}}:
+        - script: git clone https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
+          displayName: "Clone Repository"
+      
+      - ${{if eq(parameters.cloneType, 'Blobless')}}:
+        - script: git clone --filter=blob:none https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
+          displayName: "Clone Repository"
+      
+      - ${{if eq(parameters.cloneType, 'Treeless')}}:
+        - script: git clone --filter=tree:0 https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
+          displayName: "Clone Repository"
+      
+      - ${{if eq(parameters.cloneType, 'Shallow (Depth 1)')}}:
+        - script: git clone --depth=1 https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
+          displayName: "Clone Repository"
+
       - script: |
-          if [ "${{ parameters.cloneType }}" = "Full" ] ; then
-            git clone https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
-          fi
-          if [ "${{ parameters.cloneType }}" = "Blobless" ] ; then
-            git clone --filter=blob:none https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
-          fi
-          if [ "${{ parameters.cloneType }}" = "Treeless" ] ; then
-            git clone --filter=tree:0 https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
-          fi
-          if [ "${{ parameters.cloneType }}" = "Shallow (Depth 1)" ] ; then
-            git clone --depth=1 https://${{ parameters.hostingProvider }}/${{ parameters.repositoryOwner }}/${{ parameters.repositoryName }}.git
-          fi
           echo
           echo Repository Contents
           echo --------------------------------------------------------
           ls -all ${{ parameters.repositoryName }}
-        displayName: "Clone Repository"
+        displayName: "Verify Clone"
 
-      # Check for Zip
       - ${{if eq(parameters.vmImage, 'windows-latest')}}:
         - script: 7z i
           displayName: "Check for 7Zip"

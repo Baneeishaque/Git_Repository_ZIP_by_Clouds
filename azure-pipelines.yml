@@ -76,5 +76,5 @@ jobs:
             ls
           displayName: "Zip Repository"
 
-      - publish: "${{parameters.repositoryOwner}}_$(parameters.repositoryName)_${{parameters.vmImage}}.zip"
-        artifact: "$(parameters.repositoryOwner)_$(parameters.repositoryName)_${{parameters.vmImage}}"
+      - publish: "${{ parameters.repositoryOwner }}_${{ parameters.repositoryName }}_${{ parameters.vmImage }}.zip"
+        artifact: "${{ parameters.repositoryOwner }}_${{ parameters.repositoryName }}_${{ parameters.vmImage }}"

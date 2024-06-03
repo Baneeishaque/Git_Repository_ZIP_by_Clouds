@@ -18,10 +18,12 @@ parameters:
   - name: repositoryOwner
     displayName: Repository Owner
     type: string
+    default: phpmyadmin
 
   - name: repositoryName
     displayName: Repository Name
     type: string
+    default: phpmyadmin
 
 trigger: none
 

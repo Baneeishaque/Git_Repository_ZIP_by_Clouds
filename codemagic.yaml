@@ -1,0 +1,11 @@
+workflows:
+  zip-the-repository:
+    name: ZIP The Repository
+    instance_type: mac_mini_m1
+    inputs:
+      repositoryGitUrl:
+        description: Repository Git URL
+        type: string
+    scripts:
+      - name: Clone Repository
+        script: git clone ${{ inputs.repositoryGitUrl }}
